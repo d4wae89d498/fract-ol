@@ -1,81 +1,93 @@
-#include "fract-ol.h"
-#ifndef HEIGHT
-# define HEIGHT 1080
+#include "window.h"
+#include "stdio.h"
+#include "stdlib.h"
+#ifndef M_SCREEN_SCALE
+# define M_SCREEN_SCALE 1.5
 #endif
-#ifndef WIDTH
-# define WIDTH 1920
-#endif
-
-typedef struct s_color
+static int mousemove (int x, int y, t_mlx_win *data)
 {
-	unsigned char	r;
-	unsigned char	g;
-	unsigned char 	b;
-}	t_color;
-
-t_color palette[3] = {{255,0,0},{0,255,0},{0,0,0}};
-
-
-
-int ft_interpolate(unsigned long long i)
-{
-	return *(int*)(unsigned char[4]){ 0, i, i, i};
+	(void)data;
+	printf("mouse move:\t[x=%i y=%i]\n", x, y);
+	return (0);
 }
 
-
-
-int	main(void)
+static int mousedown(int keycode, t_mlx_win *data)
 {
-	void	*mlx;
-	void	*mlx_win;
-	t_data	img;
+	(void) data;
+	printf("mouse code:\t%i\n", keycode);
+	return (0);
+}
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, WIDTH, HEIGHT, "Fract-ol");
-	img.img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-			&img.endian);
-
-
-	t_complex 			registers[4];
-	unsigned long long	i;
-	unsigned long long	x;
-	unsigned long long	y;
-	
-	y = 0;
-	while (y < HEIGHT)
-	{
-		x = 0;
-		while (x < WIDTH)
-		{
-			registers[0].r = 2 * 1.6 * ((long double)x / (long double)WIDTH - 0.5);
-			registers[0].i = 2 * 0.9 * ((long double)y /  (long double)HEIGHT - 0.5);
-			i = 1;
-			while (i < 4)
-			{
-				registers[i].r = 0;
-				registers[i].i = 0;
-				i += 1;
-			}
-			i = 0;
-			while (i < 255 && sqr(registers[1].r) + sqr(registers[1].i) < 4)
-			{
-				interpret(registers);
-				i += 1;
-			}
-		
-
-			my_mlx_pixel_put(&img, x, y, ft_interpolate(i));
-
-			x += 1;
-		}
-		y += 1;
+static int	keydown(int keycode, t_mlx_win *data)
+{
+    (void) data;
+	printf("key code:\t%i\n", keycode);
+	if (keycode == 53)
+    {
+        ft_mlx_win_delete(*data);
+        exit (0);
 	}
+    if (keycode == 123)
+        printf("LEFT\n");
+    else if (keycode == 124)
+        printf("RIGHT\n");
+    else if (keycode == 125)
+        printf("DOWN");
+    else if (keycode == 126)
+        printf("TOP\n");
+    return (0);
+}
 
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0); 
+static int	destroy(t_mlx_win *data)
+{
+	ft_mlx_win_delete(*data);
+    exit (0);
+}
 
+static int usage(char *ex)
+{
+    return (printf("usage: %s <char>\n"
+        "\t- m mandlebrot\n"
+        "\t- j julia\n"
+        "\t- b bifurcation\n", ex) % 1);
+}
 
-	mlx_loop(mlx);
+int(*const g_fractals[255])(t_mlx_win *) = {
+        ['m'] = mandlebrot,
+        ['j'] = julia,
+        ['b'] = bifurcation
+};
 
-	return 0;
+int	main(int ac, char **av)
+{
+    t_mlx_win win;
+
+    if (ac != 2)
+        return (usage(av[0]));
+    if (!g_fractals[(int)av[1][0]] || av[1][1])
+    {
+        printf("Error : fractal '%s' not exists.", av[1]);
+        return (usage(av[0]));
+    }
+    win = ft_mlx_win("fract-ol", (int)(1920 * M_SCREEN_SCALE),
+                     (int)(1080 * M_SCREEN_SCALE));
+    if (win.error)
+    {
+        printf ("Initialisation issue.. %p %p %p %p.\n",
+                win.mlx , win.win ,win.img.img , win.img.addr);
+        destroy(&win);
+    }
+    if (g_fractals[(int)av[1][0]](&win))
+    {
+        printf("drawing issue...\n");
+        destroy(&win);
+    }
+    ft_mlx_hook_mousedown(win, mousedown);
+    ft_mlx_hook_destroy(win, destroy);
+    ft_mlx_hook_mousemove(win, mousemove);
+    ft_mlx_hook_keydown(win, keydown);
+    ft_mlx_loop();
+    printf("anormal exit..");
+	destroy(&win);
+    return (0);
 }

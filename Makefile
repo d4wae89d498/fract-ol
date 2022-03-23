@@ -1,11 +1,20 @@
 NAME=fract-ol
 SRCS=$(shell ls *.c)
 OBJS=$(SRCS:.c=.o)
-%.o: %.c
-	$(CC) -Wall -Wextra -Werror -Iminilibx -c $< -o $@
+all: $(NAME)
 
+all:	$(NAME)
+%.o: %.c
+	$(CC) -g -Wall -Wextra -Werror -Iminilibx -Iheaders -c $< -o $@
 $(NAME):	$(OBJS)
-	cc $(OBJS) minilibx/libmlx.a \
-	-Wall -framework Foundation -isysroot `xcrun --show-sdk-path` \
-	-framework Cocoa -framework OpenGL \
-	&& ./a.out
+	make -C minilibx
+	cc -g $(OBJS) -Iminilibx minilibx/libmlx.a -Iheaders 			\
+	-Wall -framework Foundation -isysroot `xcrun --show-sdk-path` 	\
+	-framework Cocoa -framework OpenGL -o $(NAME) 					\
+	&& ./$(NAME) m
+clean:
+	make clean -C minilibx
+	rm -rf $(OBJS)
+fclean:	clean
+	rm -rf $(NAME)
+.PHONY: mlx
