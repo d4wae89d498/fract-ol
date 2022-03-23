@@ -21,11 +21,11 @@ static int mousedown(int button, int x, int y, t_mlx_win *data)
 
     if (button == 1)
     {
-        data->zoom *= 1.20;
+        data->zoom *= 0.80;
     }
     else
     {
-        data->zoom *= 0.80;
+        data->zoom *= 1.20;
     }
     printf("%i\n", (data->height));
 
@@ -33,7 +33,7 @@ static int mousedown(int button, int x, int y, t_mlx_win *data)
     //data->xpos = x;
 
     printf("draawing...\n");
-    julia(data);
+    mandlebrot(data);
     printf("done.\n");
 	(void) data; (void) button;
 	//printf("mouse code: [zoom: %Lf]\t%i\n", data->zoom, keycode);
@@ -58,7 +58,7 @@ static int	keydown(int keycode, t_mlx_win *data)
         data->ypos += 0.10;
     else if (keycode == 126)
         data->ypos -= 0.10;
-    julia(data);
+    mandlebrot(data);
     return (0);
 }
 
@@ -118,6 +118,7 @@ int	main(int ac, char **av)
     ft_mlx_hook_mousemove(&win, mousemove);
     ft_mlx_hook_keydown(&win, keydown);
     ft_mlx_loop(&win, loop);
+    mlx_loop(win.mlx);
     printf("anormal exit..");
 	destroy(&win);
     return (0);

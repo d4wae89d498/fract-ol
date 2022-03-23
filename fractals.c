@@ -2,7 +2,7 @@
 #include "complex.h"
 #include <stdio.h>
 
-t_color iterations_to_color(int i)
+t_color color(int i)
 {
     t_color o;
     double incr;
@@ -15,8 +15,8 @@ t_color iterations_to_color(int i)
     incr = i / 7;
     if (incr < 1)
         incr = 00000.1;
-    c = (int)(i / incr);
-    r = (int)(i - c);
+    c = (int)(i / incr) + 1;
+    r = (int)(i + 1 - c);
     o.a = 0;
     if (c == 0) {
         o.r = 0;
@@ -66,6 +66,7 @@ int mandlebrot(t_mlx_win *win)
     int         x;
     int         y;
 
+
     y = 0;
     while (y < win->height)
     {
@@ -75,13 +76,14 @@ int mandlebrot(t_mlx_win *win)
             c = ft_complex( win->xpos + win->zoom * 2 * 1.6 * ((long double)x / win->width - 0.5), 2 * 0.9 * ((long double)y /  win->height - 0.5) * win->zoom + win->ypos);
             z = ft_complex(0,0);
             i = 0;
-            while (i < 255 && sqr(re(z)) + sqr(im(z)) < 4)
+            while (i < 100 && sqr(re(z)) + sqr(im(z)) < 4)
             {
                 z = ft_complex_add(ft_complex_sqr(z), c);
                 i += 1;
             }
-            i *= 20;
-            ft_mlx_pixel(win, x, y, *(unsigned int*)(unsigned char[4]){0,i,i,i});
+
+            i *= 255 / 100;
+            ft_mlx_pixel(win, x, y, *(int*)color(i).bytes);
             x += 1;
         }
         y += 1;
@@ -107,15 +109,15 @@ int julia(t_mlx_win *win)
             //z = ft_complex(2 * 1.6 * ((long double)x / win->width - 0.5), 2 * 0.9 * ((long double)y /  win->height - 0.5));
             c = ft_complex(0,.285 + 0.013);
             i = 0;
-            while (i < 42 && sqr(re(z)) + sqr(im(z)) < 4)
+            while (i < 66 && sqr(re(z)) + sqr(im(z)) < 4)
             {
                 z = ft_complex_add(ft_complex_sqr(z), c);
                 i += 1;
             }
-            i *= (255 / 42);
+            i *= (255 / 7);
            // ft_mlx_pixel(*win, x, y, *(unsigned int*)(unsigned char[4]){0,i,i,i});
-           // ft_mlx_pixel(win, x, y, *(unsigned int*)(unsigned char[4]){0,i,i,i});
-           ft_mlx_pixel(win, x, y, *(int*)iterations_to_color(i).bytes);
+            ft_mlx_pixel(win, x, y, *(unsigned int*)(unsigned char[4]){0,i,i,i});
+         //  ft_mlx_pixel(win, x, y, *(int*)iterations_to_color(i).bytes);
             x += 1;
         }
         y += 1;

@@ -41,6 +41,7 @@ t_mlx_win  ft_mlx_win(char *title, int width, int height)
 
 int     ft_mlx_draw(t_mlx_win *win)
 {
+    mlx_clear_window(win->mlx, win->win);
     return (mlx_put_image_to_window(win->mlx, win->win, win->img.img, 0, 0));
 }
 

@@ -2,16 +2,17 @@ NAME=fract-ol
 SRCS=$(shell ls *.c)
 OBJS=$(SRCS:.c=.o)
 all: $(NAME)
-
-all:	$(NAME)
 %.o: %.c
 	$(CC) -g -Wall -Wextra -Werror -Iminilibx -Iheaders -c $< -o $@
-$(NAME):	$(OBJS)
+$(NAME):	$(OBJS) complex.h window.h
 	make -C minilibx
 	cc -g $(OBJS) -Iminilibx minilibx/libmlx.a -Iheaders 			\
 	-Wall -framework Foundation -isysroot `xcrun --show-sdk-path` 	\
-	-framework Cocoa -framework OpenGL -o $(NAME) 					\
-	&& ./$(NAME) j
+	-framework Cocoa -framework OpenGL -o $(NAME)
+m:	$(NAME)
+	./fract-ol m
+j:	$(NAME)
+	./fract-ol j
 clean:
 	make clean -C minilibx
 	rm -rf $(OBJS)
