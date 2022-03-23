@@ -2,15 +2,6 @@
 #include "complex.h"
 #include <stdio.h>
 
-t_complex get_c(int o, t_complex c)
-{
-    static t_complex cd;
-
-    if (o)
-        cd = c;
-    return (cd);
-}
-
 int mandlebrot(t_mlx_win *win)
 {
     t_complex   c;
