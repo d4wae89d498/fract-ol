@@ -45,10 +45,7 @@ t_complex ft_complex_sqr(t_complex z)
     return (z * z);
 }
 
-
 #else
-
-
 
 long double re(t_complex c)
 {
@@ -80,8 +77,7 @@ t_complex ft_complex_add(t_complex a, t_complex b)
 t_complex ft_complex_mul(t_complex a, t_complex b)
 {
     return (ft_complex(re(a) * re(b) - im(a) * im(b),
-                            2 * re(a) * im(b)
-                       ));
+                            2 * re(a) * im(b)));
 }
 
 /*
@@ -92,12 +88,9 @@ t_complex ft_complex_mul(t_complex a, t_complex b)
  */
 t_complex ft_complex_sqr(t_complex z)
 {
-/*    return (ft_complex(sqr(re(z)) - sqr(im(z)),
-                        2 * re(z) * im(z) ));*/
-    return (ft_complex_mul(z,z));
-
+    return (ft_complex(sqr(re(z)) - sqr(im(z)),
+                        2 * re(z) * im(z) ));
 }
-
 #endif
 
 

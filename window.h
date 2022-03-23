@@ -1,9 +1,8 @@
 //
 // Created by mfaussur on 23/03/2022.
 //
-
-#ifndef FRACT_OL_WINDOW_H
-#define FRACT_OL_WINDOW_H
+#ifndef WINDOW_H
+#define WINDOW_H
 #include "minilibx/mlx.h"
 
 enum {
@@ -23,7 +22,6 @@ typedef struct  s_mlx_img {
     int		line_length;
     int		endian;
 }   t_mlx_img;
-
 
 typedef struct	s_mlx_win {
     void	    *mlx;
@@ -46,9 +44,7 @@ void        ft_mlx_hook_keyup(t_mlx_win win, int (*f)(int, t_mlx_win *));
 void        ft_mlx_hook_mousemove(t_mlx_win win, int (*f)(int, int, t_mlx_win *));
 void        ft_mlx_hook_destroy(t_mlx_win win, int (*f)(t_mlx_win *));
 void        ft_mlx_hook_expose(t_mlx_win win, int (*f)(t_mlx_win *));
-
 int         mandlebrot(t_mlx_win *win);
 int         julia(t_mlx_win *win);
 int         bifurcation(t_mlx_win *win);
-
-#endif //FRACT_OL_WINDOW_H
+#endif
