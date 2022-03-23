@@ -2,25 +2,48 @@
 #include "stdio.h"
 #include "stdlib.h"
 #ifndef M_SCREEN_SCALE
-# define M_SCREEN_SCALE 1.5
+# define M_SCREEN_SCALE 0.5
 #endif
 static int mousemove (int x, int y, t_mlx_win *data)
 {
 	(void)data;
+//    data->ypos = (int)(y * 0.1);
+ //   data->xpos = (int)(x * 0.1);
 	printf("mouse move:\t[x=%i y=%i]\n", x, y);
 	return (0);
 }
 
-static int mousedown(int keycode, t_mlx_win *data)
+static int mousedown(int button, int x, int y, t_mlx_win *data)
 {
-	(void) data;
-	printf("mouse code:\t%i\n", keycode);
+    (void)x;
+    (void)y;
+    printf("mouse: %p %i\n", data,  button);
+
+    if (button == 1)
+    {
+        data->zoom *= 1.20;
+    }
+    else
+    {
+        data->zoom *= 0.80;
+    }
+    printf("%i\n", (data->height));
+
+  //  data->ypos = y;
+    //data->xpos = x;
+
+    printf("draawing...\n");
+    julia(data);
+    printf("done.\n");
+	(void) data; (void) button;
+	//printf("mouse code: [zoom: %Lf]\t%i\n", data->zoom, keycode);
 	return (0);
 }
 
 static int	keydown(int keycode, t_mlx_win *data)
 {
     (void) data;
+    printf("key: %p %i\n", data, keycode);
 	printf("key code:\t%i\n", keycode);
 	if (keycode == 53)
     {
@@ -28,13 +51,14 @@ static int	keydown(int keycode, t_mlx_win *data)
         exit (0);
 	}
     if (keycode == 123)
-        printf("LEFT\n");
+        data->xpos -= 0.10;
     else if (keycode == 124)
-        printf("RIGHT\n");
+        data->xpos += 0.10;
     else if (keycode == 125)
-        printf("DOWN");
+        data->ypos += 0.10;
     else if (keycode == 126)
-        printf("TOP\n");
+        data->ypos -= 0.10;
+    julia(data);
     return (0);
 }
 
@@ -46,10 +70,17 @@ static int	destroy(t_mlx_win *data)
 
 static int usage(char *ex)
 {
-    return (printf("usage: %s <char>\n"
+    return (printf("usage: %s <char> <opt1> <opt2>\n"
         "\t- m mandlebrot\n"
-        "\t- j julia\n"
+        "\t- j julia <Re> <Im> \n"
         "\t- b bifurcation\n", ex) % 1);
+}
+
+static int loop(t_mlx_win *data)
+{
+    // tick..
+    (void) data;
+    return (0);
 }
 
 int(*const g_fractals[255])(t_mlx_win *) = {
@@ -82,11 +113,11 @@ int	main(int ac, char **av)
         printf("drawing issue...\n");
         destroy(&win);
     }
-    ft_mlx_hook_mousedown(win, mousedown);
-    ft_mlx_hook_destroy(win, destroy);
-    ft_mlx_hook_mousemove(win, mousemove);
-    ft_mlx_hook_keydown(win, keydown);
-    ft_mlx_loop();
+    ft_mlx_hook_mousedown(&win, mousedown);
+    ft_mlx_hook_destroy(&win, destroy);
+    ft_mlx_hook_mousemove(&win, mousemove);
+    ft_mlx_hook_keydown(&win, keydown);
+    ft_mlx_loop(&win, loop);
     printf("anormal exit..");
 	destroy(&win);
     return (0);

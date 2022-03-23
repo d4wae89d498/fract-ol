@@ -11,10 +11,10 @@ $(NAME):	$(OBJS)
 	cc -g $(OBJS) -Iminilibx minilibx/libmlx.a -Iheaders 			\
 	-Wall -framework Foundation -isysroot `xcrun --show-sdk-path` 	\
 	-framework Cocoa -framework OpenGL -o $(NAME) 					\
-	&& ./$(NAME) m
+	&& ./$(NAME) j
 clean:
 	make clean -C minilibx
 	rm -rf $(OBJS)
 fclean:	clean
 	rm -rf $(NAME)
-.PHONY: mlx
+re: fclean $(NAME)

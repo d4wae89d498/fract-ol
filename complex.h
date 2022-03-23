@@ -5,7 +5,7 @@
 #ifndef COMPLEX_H
 # define COMPLEX_H
 # include "math.h"
-# define COMPLEX_WITH_GCC 0
+# define COMPLEX_WITH_GCC 1
 # if COMPLEX_WITH_GCC == 0
 typedef struct s_complex
 {

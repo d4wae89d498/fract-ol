@@ -30,6 +30,9 @@ t_mlx_win  ft_mlx_win(char *title, int width, int height)
         out.img.addr = mlx_get_data_addr(out.img.img, &(out.img.bits_per_pixel), &(out.img.line_length),
                                          &(out.img.endian));
     }
+    out.xpos = .0;
+    out.ypos = .0;
+    out.zoom = 1.0;
     out.width = width;
     out.height = height;
     out.error = !out.mlx || !out.win || !out.img.img || !out.img.addr;
@@ -50,55 +53,56 @@ int     ft_mlx_win_delete(t_mlx_win data)
     return (r);
 }
 
-void	ft_mlx_pixel(t_mlx_win win, int x, int y, unsigned int color)
+void	ft_mlx_pixel(t_mlx_win *win, int x, int y, unsigned int color)
 {
     (void) color;
     *(unsigned int *)
-    (win.img.addr + (y * win.img.line_length + x * (win.img.bits_per_pixel / 8))) = color;
+    (win->img.addr + (y * win->img.line_length + x * (win->img.bits_per_pixel / 8))) = color;
 }
 
-int ft_mlx_loop()
+int ft_mlx_loop(t_mlx_win *data, int (*f)(t_mlx_win*))
 {
-    void    *mlx;
+    void        *mlx;
 
     mlx = ft_get_mlx();
+    mlx_loop_hook(mlx, f, data);
     return (mlx_loop(mlx));
 }
 
-void   ft_mlx_hook_mousedown(t_mlx_win win, int (*f)(int, t_mlx_win *))
+void   ft_mlx_hook_mousedown(t_mlx_win *win, int (*f)(int button, int x, int y, t_mlx_win *data))
 {
-    mlx_hook(win.win, ON_MOUSEDOWN, 0, f, &win);
+    mlx_mouse_hook(win->win, f, win);
 }
 
-void  ft_mlx_hook_keydown(t_mlx_win win, int (*f)(int, t_mlx_win *))
+void  ft_mlx_hook_keydown(t_mlx_win *win, int (*f)(int, t_mlx_win *))
 {
-    mlx_hook(win.win, ON_KEYDOWN, 0, f, &win);
+    mlx_hook(win->win, ON_KEYDOWN, 0, f, win);
 }
 
-void    ft_mlx_hook_mouseup(t_mlx_win win, int (*f)(int, t_mlx_win *))
+void    ft_mlx_hook_mouseup(t_mlx_win *win, int (*f)(int, t_mlx_win *))
 {
-    mlx_hook(win.win, ON_MOUSEUP, 0, f, &win);
+    mlx_hook(win->win, ON_MOUSEUP, 0, f, win);
 }
 
-void   ft_mlx_hook_keyup(t_mlx_win win, int (*f)(int, t_mlx_win *))
+void   ft_mlx_hook_keyup(t_mlx_win *win, int (*f)(int, t_mlx_win *))
 {
-    mlx_hook(win.win, ON_KEYUP, 0, f, &win);
-}
-
-
-void   ft_mlx_hook_mousemove(t_mlx_win win, int (*f)(int, int, t_mlx_win *))
-{
-    mlx_hook(win.win, ON_MOUSEMOVE, 0, f, &win);
+    mlx_hook(win->win, ON_KEYUP, 0, f, win);
 }
 
 
-void   ft_mlx_hook_destroy(t_mlx_win win, int (*f)(t_mlx_win *))
+void   ft_mlx_hook_mousemove(t_mlx_win *win, int (*f)(int, int, t_mlx_win *))
 {
-    mlx_hook(win.win, ON_DESTROY, 0, f, &win);
+    mlx_hook(win->win, ON_MOUSEMOVE, 0, f, win);
 }
 
 
-void   ft_mlx_hook_expose(t_mlx_win win, int (*f)(t_mlx_win *))
+void   ft_mlx_hook_destroy(t_mlx_win *win, int (*f)(t_mlx_win *))
 {
-    mlx_hook(win.win, ON_EXPOSE, 0, f, &win);
+    mlx_hook(win->win, ON_DESTROY, 0, f, win);
+}
+
+
+void   ft_mlx_hook_expose(t_mlx_win *win, int (*f)(t_mlx_win *))
+{
+    mlx_hook(win->win, ON_EXPOSE, 0, f, win);
 }
