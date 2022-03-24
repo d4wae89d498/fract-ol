@@ -13,8 +13,10 @@ TODO:
 - [X] Add pthreads suport
 - [ ] Add [GMP suport](https://gmplib.org) 
 - [ ] Threads should not be created / deleted at each frames
-- [ ] Re-use pixels from prev fram
-- [ ] Use prev-fram pixels to determine stable area and optimise by avoiding useless calculations
+- [ ] Re-use pixels frome prev frame
+- [ ] Use prev-frame pixels to determine stable area and optimise by avoiding useless calculations
+- [ ] Quternions fractals
+- [ ] 3D third person camera
 - [ ] Color smoothing 
 - [ ] Add a console mode
 
