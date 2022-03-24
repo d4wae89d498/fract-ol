@@ -2,6 +2,8 @@
 
 Fractal renderer using [minilibx](https://harm-smits.github.io/42docs/libs/minilibx).
 
+![demo picture](/mandelbrot_set.png)
+
 TODO:
 - [X] Julia
 - [X] Mandelbrot
