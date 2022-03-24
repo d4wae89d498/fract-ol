@@ -2,49 +2,25 @@
 #include "stdio.h"
 #include "stdlib.h"
 #ifndef M_SCREEN_SCALE
-# define M_SCREEN_SCALE 0.5
+# define M_SCREEN_SCALE 1
 #endif
-static int mousemove (int x, int y, t_mlx_win *data)
-{
-	(void)data;
-//    data->ypos = (int)(y * 0.1);
- //   data->xpos = (int)(x * 0.1);
-	printf("mouse move:\t[x=%i y=%i]\n", x, y);
-	return (0);
-}
 
 static int mousedown(int button, int x, int y, t_mlx_win *data)
 {
-    (void)x;
-    (void)y;
+    (void) x; (void) y;
     printf("mouse: %p %i\n", data,  button);
-
     if (button == 1)
-    {
         data->zoom *= 0.80;
-    }
     else
-    {
         data->zoom *= 1.20;
-    }
     printf("%i\n", (data->height));
-
-  //  data->ypos = y;
-    //data->xpos = x;
-
-    printf("draawing...\n");
     mandlebrot(data);
-    printf("done.\n");
-	(void) data; (void) button;
-	//printf("mouse code: [zoom: %Lf]\t%i\n", data->zoom, keycode);
 	return (0);
 }
 
 static int	keydown(int keycode, t_mlx_win *data)
 {
-    (void) data;
     printf("key: %p %i\n", data, keycode);
-	printf("key code:\t%i\n", keycode);
 	if (keycode == 53)
     {
         ft_mlx_win_delete(*data);
@@ -100,8 +76,8 @@ int	main(int ac, char **av)
         printf("Error : fractal '%s' not exists.", av[1]);
         return (usage(av[0]));
     }
-    win = ft_mlx_win("fract-ol", (int)(1920 * M_SCREEN_SCALE),
-                     (int)(1080 * M_SCREEN_SCALE));
+    win = ft_mlx_win("fract-ol", (int)(1920),
+                     (int)(1080));
     if (win.error)
     {
         printf ("Initialisation issue.. %p %p %p %p.\n",
@@ -115,7 +91,6 @@ int	main(int ac, char **av)
     }
     ft_mlx_hook_mousedown(&win, mousedown);
     ft_mlx_hook_destroy(&win, destroy);
-    ft_mlx_hook_mousemove(&win, mousemove);
     ft_mlx_hook_keydown(&win, keydown);
     ft_mlx_loop(&win, loop);
     mlx_loop(win.mlx);

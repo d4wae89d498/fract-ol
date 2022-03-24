@@ -1,64 +1,81 @@
 #include "window.h"
 #include "complex.h"
-#include <stdio.h>
-
-t_color color(int i)
+#include "stdio.h"
+#include "pthread.h"
+#define THREADS  32
+typedef struct s_tha
 {
-    t_color o;
-    double incr;
-    unsigned char c;
-    unsigned char r;
+    int         n;
+    t_mlx_win   *win;
+} t_tha;
+pthread_mutex_t lock;
 
-    if (i <= 2) {
-        return (t_color){.a=0, .r=0, .g=0, .b=0};
-    }
-    incr = i / 7;
-    if (incr < 1)
-        incr = 00000.1;
-    c = (int)(i / incr) + 1;
-    r = (int)(i + 1 - c);
-    o.a = 0;
-    if (c == 0) {
-        o.r = 0;
-        o.g = i * r;
-        o.b = 0;
-    }
-    else if (c == 1) {
-        o.r = 0;
-        o.g = 255;
-        o.b = (int)(256 / incr) * r;
-    }
-    else if (c == 2) {
-        o.r = (int)(256 / incr) * r;
-        o.g = 255;
-        o.b = 255;
-    }
-    else if (c == 3) {
-        o.r = (int)(256 / incr) * r;
-        o.g = 0;
-        o.b = 255;
-    }
-    else if (c == 4) {
-        o.r = 255;
-        o.g = (int)(256 / incr) * r;
-        o.b = 255;
-    }
-    else if (c == 5) {
-        o.r = 255;
-        o.g = (int)(256 / incr) * r;
-        o.b = 0;
-    }
-    else //if (c == 6)
+void *draw_m(void *data)
+{
+    t_tha       *tha;
+    t_mlx_win   *win;
+    int         x;
+    int         y;
+    t_complex   z;
+    t_complex   c;
+    unsigned    i;
+
+    tha = data;
+    win = tha->win;
+    printf("drawing thread %i...\n", tha->n);
+
+    y = 0;
+    while (y < win->height)
     {
-        o.r = 255;
-        o.g = 255;
-        o.b = (int)(256 / incr) * r;
+        x = 0 + (win->width / THREADS * tha->n);
+        while (x < (win->width / THREADS) * (tha->n + 1))
+        {
+            c = ft_complex(win->xpos + win->zoom * 2 * 1.6 * ((long double) x / win->width - 0.7),
+                           2 * 0.9 * ((long double) y / win->height - 0.5) * win->zoom + win->ypos);
+            z = ft_complex(0, 0);
+            i = 0;
+            while (i < 64 && sqr(re(z)) + sqr(im(z)) < 4) {
+                z = ft_complex_add(ft_complex_sqr(z), c);
+                i += 1;
+            }
+            i *= 0x100121;
+         //  pthread_mutex_lock(&lock);
+            ft_mlx_pixel(win, x, y, i);
+           // pthread_mutex_unlock(&lock);
+
+            x += 1;
+        }
+        y += 1;
     }
-    return (o);
+    printf("done.\n");
+   return (0);
 }
 
-
 int mandlebrot(t_mlx_win *win)
+{
+    int         i;
+    pthread_t   threads[THREADS];
+    t_tha       tha[THREADS];
+
+
+    printf("drawing..\n");
+    i = 0;
+    while (i < THREADS)
+    {
+        tha[i] = (t_tha) {i, win};
+        pthread_create(threads + i, 0, draw_m, tha + i);
+        i += 1;
+    }
+    i = 0;
+    while (i < THREADS)
+    {
+        pthread_join(threads[i], 0);
+        i += 1;
+    }
+    printf("done.\n");
+    return (!ft_mlx_draw(win));
+}
+int mandlebrot_nonthreaded(t_mlx_win *win)
 {
     t_complex   c;
     t_complex   z;
@@ -66,6 +83,10 @@ int mandlebrot(t_mlx_win *win)
     int         x;
     int         y;
 
+    printf("drawing...\n");
+
+    pthread_t threads[4];
+    pthread_create(threads + 0, 0, draw_m, (void*) 101);
 
     y = 0;
     while (y < win->height)
@@ -73,21 +94,21 @@ int mandlebrot(t_mlx_win *win)
         x = 0;
         while (x < win->width)
         {
-            c = ft_complex( win->xpos + win->zoom * 2 * 1.6 * ((long double)x / win->width - 0.5), 2 * 0.9 * ((long double)y /  win->height - 0.5) * win->zoom + win->ypos);
-            z = ft_complex(0,0);
+            c = ft_complex(win->xpos + win->zoom * 2 * 1.6 * ((long double) x / win->width - 0.7),
+                           2 * 0.9 * ((long double) y / win->height - 0.5) * win->zoom + win->ypos);
+            z = ft_complex(0, 0);
             i = 0;
-            while (i < 100 && sqr(re(z)) + sqr(im(z)) < 4)
-            {
+            while (i < 42 && sqr(re(z)) + sqr(im(z)) < 4) {
                 z = ft_complex_add(ft_complex_sqr(z), c);
                 i += 1;
             }
-
-            i *= 255 / 100;
-            ft_mlx_pixel(win, x, y, *(int*)color(i).bytes);
+            i *= 0x100121;
+            ft_mlx_pixel(win, x, y, i);//*(int*)(char[4]){0,i,i,i});
             x += 1;
         }
         y += 1;
     }
+    printf("done.\n");
     return (!ft_mlx_draw(win));
 }
 
@@ -115,9 +136,9 @@ int julia(t_mlx_win *win)
                 i += 1;
             }
             i *= (255 / 7);
-           // ft_mlx_pixel(*win, x, y, *(unsigned int*)(unsigned char[4]){0,i,i,i});
+            // ft_mlx_pixel(*win, x, y, *(unsigned int*)(unsigned char[4]){0,i,i,i});
             ft_mlx_pixel(win, x, y, *(unsigned int*)(unsigned char[4]){0,i,i,i});
-         //  ft_mlx_pixel(win, x, y, *(int*)iterations_to_color(i).bytes);
+            //  ft_mlx_pixel(win, x, y, *(int*)iterations_to_color(i).bytes);
             x += 1;
         }
         y += 1;

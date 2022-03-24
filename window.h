@@ -33,6 +33,7 @@ typedef struct	s_mlx_win {
     long double ypos;
     long double zoom;
     int         error;
+    int         thread;
 }   t_mlx_win;
 typedef struct s_color
 {

@@ -32,7 +32,7 @@ t_mlx_win  ft_mlx_win(char *title, int width, int height)
     }
     out.xpos = .0;
     out.ypos = .0;
-    out.zoom = 1.0;
+    out.zoom = 2.5;
     out.width = width;
     out.height = height;
     out.error = !out.mlx || !out.win || !out.img.img || !out.img.addr;
