@@ -2,7 +2,7 @@
 #include "complex.h"
 #include "stdio.h"
 #include "pthread.h"
-#define THREADS  32
+#define THREADS  64
 typedef struct s_tha
 {
     int         n;
@@ -22,7 +22,7 @@ void *draw_m(void *data)
 
     tha = data;
     win = tha->win;
-    printf("drawing thread %i...\n", tha->n);
+  //  printf("drawing thread %i...\n", tha->n);
 
     y = 0;
     while (y < win->height)
@@ -30,8 +30,8 @@ void *draw_m(void *data)
         x = 0 + (win->width / THREADS * tha->n);
         while (x < (win->width / THREADS) * (tha->n + 1))
         {
-            c = ft_complex(win->xpos + win->zoom * 2 * 1.6 * ((long double) x / win->width - 0.7),
-                           2 * 0.9 * ((long double) y / win->height - 0.5) * win->zoom + win->ypos);
+            c = ft_complex(1.6 * 3 * ((((long double) x  - win->xpos) / win->width * win->zoom   ) - 1.3),
+                           0.9 * 3 * ((((long double) y - win->ypos) /  win->height * win->zoom   )  - 1.3));
             z = ft_complex(0, 0);
             i = 0;
             while (i < 64 && sqr(re(z)) + sqr(im(z)) < 4) {
@@ -47,7 +47,7 @@ void *draw_m(void *data)
         }
         y += 1;
     }
-    printf("done.\n");
+   // printf("done.\n");
    return (0);
 }
 
@@ -58,7 +58,7 @@ int mandlebrot(t_mlx_win *win)
     t_tha       tha[THREADS];
 
 
-    printf("drawing..\n");
+  //  printf("drawing..\n");
     i = 0;
     while (i < THREADS)
     {
@@ -72,7 +72,7 @@ int mandlebrot(t_mlx_win *win)
         pthread_join(threads[i], 0);
         i += 1;
     }
-    printf("done.\n");
+  //  printf("done.\n");
     return (!ft_mlx_draw(win));
 }
 int mandlebrot_nonthreaded(t_mlx_win *win)
@@ -83,7 +83,7 @@ int mandlebrot_nonthreaded(t_mlx_win *win)
     int         x;
     int         y;
 
-    printf("drawing...\n");
+  //  printf("drawing...\n");
 
     pthread_t threads[4];
     pthread_create(threads + 0, 0, draw_m, (void*) 101);
@@ -108,7 +108,7 @@ int mandlebrot_nonthreaded(t_mlx_win *win)
         }
         y += 1;
     }
-    printf("done.\n");
+  //  printf("done.\n");
     return (!ft_mlx_draw(win));
 }
 

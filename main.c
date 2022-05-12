@@ -9,11 +9,27 @@ static int mousedown(int button, int x, int y, t_mlx_win *data)
 {
     (void) x; (void) y;
     printf("mouse: %p %i\n", data,  button);
-    if (button == 1)
-        data->zoom *= 0.80;
-    else
-        data->zoom *= 1.20;
-    printf("%i\n", (data->height));
+    if (button == 4 || button == 5)
+    {
+        if (button == 4)
+        {
+            data->zoom *= 1.20;
+      	    data->xpos = x - (x - data->xpos) / 1.20;
+            data->ypos = y - (y - data->ypos) / 1.20;
+        }
+        else if (button == 5)
+        {
+            data->zoom *= 1 / 1.20;
+      	    data->xpos = x - (x - data->xpos) * 1.20;
+            data->ypos = y - (y - data->ypos) * 1.20;
+        }
+      	
+
+        printf("zoom: %Lf\n", data->zoom);
+        printf("xpos: %Lf\n", data->xpos);
+        printf("ypos: %Lf\n", data->ypos);
+    }
+    printf("%i %i\n", x, y);
     mandlebrot(data);
 	return (0);
 }
@@ -27,13 +43,13 @@ static int	keydown(int keycode, t_mlx_win *data)
         exit (0);
 	}
     if (keycode == 123)
-        data->xpos -= 0.10;
+        data->xpos += data->width / 4;
     else if (keycode == 124)
-        data->xpos += 0.10;
+        data->xpos -= data->width / 4;
     else if (keycode == 125)
-        data->ypos += 0.10;
+        data->ypos -= data->height / 4;
     else if (keycode == 126)
-        data->ypos -= 0.10;
+        data->ypos += data->height / 4;
     mandlebrot(data);
     return (0);
 }
@@ -76,8 +92,7 @@ int	main(int ac, char **av)
         printf("Error : fractal '%s' not exists.", av[1]);
         return (usage(av[0]));
     }
-    win = ft_mlx_win("fract-ol", (int)(1920),
-                     (int)(1080));
+    win = ft_mlx_win("fract-ol", (int)(1024), (int)(720));
     if (win.error)
     {
         printf ("Initialisation issue.. %p %p %p %p.\n",
