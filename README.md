@@ -9,7 +9,7 @@ TODO:
 - [X] Mandelbrot
 - [ ] Draw bifurgation diagram 
 - [X] Basic movement / zoom
-- [ ] Better movement & zom using cursor pos
+- [X] Better movement & zom using cursor pos
 - [ ] load fractals as a .so
 - [X] Add pthreads suport
 - [ ] Add [GMP suport](https://gmplib.org) 
