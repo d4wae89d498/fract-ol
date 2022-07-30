@@ -7,6 +7,7 @@ Fractal renderer using [minilibx](https://harm-smits.github.io/42docs/libs/minil
 TODO:
 - [X] Julia
 - [X] Mandelbrot
+- [X] More fractals
 - [ ] Draw bifurgation diagram 
 - [X] Basic movement / zoom
 - [X] Better movement & zom using cursor pos
