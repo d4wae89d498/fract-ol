@@ -1,10 +1,10 @@
 NAME=fract-ol
-SRCS=$(shell ls *.c)
+SRCS=math1.c math2.c      fractals.c      main.c          window.c
 OBJS=$(SRCS:.c=.o)
 all: $(NAME)
 %.o: %.c
 	$(CC) -O3 -Wall -Wextra -Werror -Iminilibx -Iheaders -c $< -o $@
-$(NAME):	$(OBJS) complex.h window.h Makefile
+$(NAME):	$(OBJS) mymath.h window.h Makefile
 	make -C minilibx
 	cc -O3 $(OBJS) -Iminilibx minilibx/libmlx.a -Iheaders 			\
 	-Wall -framework Foundation -isysroot `xcrun --show-sdk-path` 	\
