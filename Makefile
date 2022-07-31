@@ -1,9 +1,9 @@
 NAME=fract-ol
-SRCS=math1.c math2.c      fractals.c      main.c          window.c
+SRCS=math1.c math2.c fractals/charbon.c fractals.c      main.c          window.c
 OBJS=$(SRCS:.c=.o)
 all: $(NAME)
 %.o: %.c
-	$(CC) -O3 -Wall -Wextra -Werror -Iminilibx -Iheaders -c $< -o $@
+	$(CC) -O3 -Wall -Wextra -Werror -Iminilibx -Iheaders -I. -c $< -o $@
 $(NAME):	$(OBJS) mymath.h window.h Makefile
 	make -C minilibx
 	cc -O3 $(OBJS) -Iminilibx minilibx/libmlx.a -Iheaders 			\

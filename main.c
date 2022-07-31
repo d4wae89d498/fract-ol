@@ -6,7 +6,7 @@
 /*   By: mafaussu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 10:42:55 by mafaussu          #+#    #+#             */
-/*   Updated: 2022/07/30 12:28:10 by mafaussu         ###   ########lyon.fr   */
+/*   Updated: 2022/07/31 16:42:32 by mafaussu         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,11 @@
 # define M_SCREEN_SCALE 1
 #endif
 
-static int(*const g_fractals[255])(t_mlx_win *) = {
-        ['m'] = mandlebrot,
-        ['j'] = julia,
-        ['a'] = mandleia,
-        ['b'] = julebrot,
-		['c'] = charbocmieu
-};
-static int	g_current;
 
+unsigned int(*const g_fractals[255])(t_mlx_win *, int, int) = {
+		['c'] = charbon_draw_pixel
+};
+int	g_current = 22;
 
 static int mousedown(int button, int x, int y, t_mlx_win *data)
 {
@@ -53,7 +49,7 @@ static int mousedown(int button, int x, int y, t_mlx_win *data)
         printf("ypos: %Lf\n", data->ypos);
     }
     printf("%i %i\n", x, y);
-    g_fractals[g_current](data);
+    draw_fractal(data);
 	return (0);
 }
 
@@ -73,7 +69,7 @@ static int	keydown(int keycode, t_mlx_win *data)
         data->ypos -= data->height / 4;
     else if (keycode == 126)
         data->ypos += data->height / 4;
-    g_fractals[g_current](data);
+    draw_fractal(data);
     return (0);
 }
 
@@ -117,11 +113,12 @@ int	main(int ac, char **av)
                 win.mlx , win.win ,win.img.img , win.img.addr);
         destroy(&win);
     }
-    if (g_fractals[(int)av[1][0]](&win))
+    draw_fractal(&win);
+	/*if (g_fractals[(int)av[1][0]](&win))
     {
         printf("drawing issue...\n");
         destroy(&win);
-    }
+    }*/
     ft_mlx_hook_mousedown(&win, mousedown);
     ft_mlx_hook_destroy(&win, destroy);
     ft_mlx_hook_keydown(&win, keydown);
