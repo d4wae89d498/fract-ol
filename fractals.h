@@ -6,7 +6,7 @@
 /*   By: mafaussu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 11:06:00 by mafaussu          #+#    #+#             */
-/*   Updated: 2022/07/31 16:48:12 by mafaussu         ###   ########lyon.fr   */
+/*   Updated: 2022/07/31 18:01:29 by mafaussu         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 # define FRACTALS_H
 # include "window.h"
 
-# define THREADS 256
+# define OPT2 2
+# define OPT 8
+# define ITER 66
+# define THREADS 42
 
 int draw_fractal(t_mlx_win *win);
 
