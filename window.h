@@ -6,13 +6,14 @@
 /*   By: mafaussu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:20:34 by mafaussu          #+#    #+#             */
-/*   Updated: 2022/08/07 18:51:31 by mafaussu         ###   ########lyon.fr   */
+/*   Updated: 2022/08/07 23:16:02 by mafaussu         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WINDOW_H
 # define WINDOW_H
 # include "minilibx/mlx.h"
+# include "mymath.h"
 
 enum {
 	ON_KEYDOWN = 2,
@@ -38,12 +39,13 @@ typedef struct s_mlx_win {
 	t_mlx_img	img;
 	int			width;
 	int			height;
-	ftype	xpos;
-	ftype	ypos;
-	ftype	zoom;
+	ftype		xpos;
+	ftype		ypos;
+	ftype		zoom;
 	int			error;
 	int			thread;
-	int 		fractal;
+	int			fractal;
+	t_complex	c;
 }	t_mlx_win;
 typedef struct s_color
 {

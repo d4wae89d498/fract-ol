@@ -6,34 +6,17 @@
 /*   By: mafaussu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 10:42:55 by mafaussu          #+#    #+#             */
-/*   Updated: 2022/08/07 19:18:37 by mafaussu         ###   ########lyon.fr   */
+/*   Updated: 2022/08/07 20:34:28 by mafaussu         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "window.h"
 #include "fractals.h"
 #include "stdlib.h"
-#include "stdio.h"
 #include "unistd.h"
-
-t_fractal_function	get_fractal(int i)
-{
-	static unsigned int (*g_fractals [255])(t_mlx_win *, int, int);
-
-	if (!g_fractals['c'])
-	{
-		g_fractals['c'] = charbon;
-		g_fractals['m'] = mandlebrot;
-		g_fractals['j'] = julia;
-	}
-	return (g_fractals[i]);
-}
 
 static int	mousedown(int button, int x, int y, t_mlx_win *data)
 {
-	(void) x;
-	(void) y;
-	printf("mouse: %p %i\n", data, button);
 	if (button == 4 || button == 5)
 	{
 		if (button == 4)
@@ -55,7 +38,6 @@ static int	mousedown(int button, int x, int y, t_mlx_win *data)
 
 static int	keydown(int keycode, t_mlx_win *data)
 {
-	printf("key: %p %i\n", data, keycode);
 	if (keycode == 53)
 	{
 		ft_mlx_win_delete(*data);
@@ -85,17 +67,17 @@ static int	usage(void)
 int	main(int ac, char **av)
 {
 	t_mlx_win	win;
+	t_complex	c;
 
-	if (ac != 2 && ac != 4)
+	if ((ac != 2 && ac != 4) || !get_fractal((int)av[1][0]) || av[1][1])
 		return (usage());
-	if (!get_fractal((int)av[1][0]) || av[1][1])
-	{
-		write(1, "Error : requested fractal is not implemented.\n", 46);
-		return (usage());
-	}
+	if (ac == 4)
+		c = ft_parse_complex(av[2], av[3]);
+	else
+		c = get_fractal_default_c(av[1][0]);
 	win = ft_mlx_win("fract-ol", (int)(1024), (int)(720));
 	win.fractal = av[1][0];
-	parse_im_re(&win, ac, av);
+	win.c = c;
 	if (win.error)
 	{
 		write(1, "MLX initialisation error\n", 25);
@@ -105,7 +87,6 @@ int	main(int ac, char **av)
 	ft_mlx_hook_mousedown(&win, mousedown);
 	ft_mlx_hook_keydown(&win, keydown);
 	mlx_loop(win.mlx);
-	printf("anormal exit..");
 	ft_mlx_win_delete(win);
 	return (0);
 }
