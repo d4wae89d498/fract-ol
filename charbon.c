@@ -6,7 +6,7 @@
 /*   By: mafaussu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:05:48 by mafaussu          #+#    #+#             */
-/*   Updated: 2022/08/07 18:40:36 by mafaussu         ###   ########lyon.fr   */
+/*   Updated: 2022/08/07 23:38:40 by mafaussu         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ unsigned int	charbon(t_mlx_win *w, int x, int y)
 						- w->xpos) / w->width * w->zoom) - 1.3),
 			0.9 * 3 * ((((long double) y
 						- w->ypos) / w->height * w->zoom) - 1.3));
-	z = ft_complex(0.42, 0.42);
+	z = w->c;
 	i = 0;
 	while (i < ITER && sqr(re(z)) + sqr(im(z)) < OPT2)
 	{
