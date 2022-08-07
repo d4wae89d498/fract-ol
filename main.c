@@ -6,7 +6,7 @@
 /*   By: mafaussu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 10:42:55 by mafaussu          #+#    #+#             */
-/*   Updated: 2022/08/07 20:34:28 by mafaussu         ###   ########lyon.fr   */
+/*   Updated: 2022/08/07 23:30:01 by mafaussu         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,12 @@ static int	keydown(int keycode, t_mlx_win *data)
 	return (0);
 }
 
+static int	destroy(t_mlx_win *data)
+{
+	ft_mlx_win_delete(*data);
+	exit (0);
+}
+
 static int	usage(void)
 {
 	write(1, "usage: fract-ol <char> <Re> <Im>\n", 33);
@@ -84,6 +90,7 @@ int	main(int ac, char **av)
 		return (2);
 	}
 	draw_fractal(&win);
+	ft_mlx_hook_destroy(&win, destroy);
 	ft_mlx_hook_mousedown(&win, mousedown);
 	ft_mlx_hook_keydown(&win, keydown);
 	mlx_loop(win.mlx);
