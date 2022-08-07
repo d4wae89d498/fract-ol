@@ -1,20 +1,21 @@
 NAME=fract-ol
-SRCS=math1.c math2.c fractals/charbon.c fractals.c      main.c          window.c
+SRCS=main.c fractals.c math1.c math2.c window1.c window2.c\
+	charbon.c\
+	mandlebrot.c\
+	julia.c
 OBJS=$(SRCS:.c=.o)
+CFLAGS=-Wall -Wextra -Werror -Iminilibx -Iheaders -Dftype="float"#-O3 -g
 all: $(NAME)
-%.o: %.c
-	$(CC) -O3 -Wall -Wextra -Werror -Iminilibx -Iheaders -I. -c $< -o $@
-$(NAME):	$(OBJS) mymath.h window.h Makefile
+%.o: %.c  mymath.h window.h Makefile minilibx/libmlx.a 
+	$(CC) $(CFLAGS) -c $< -o $@
+minilibx/libmlx.a: 
 	make -C minilibx
-	cc -O3 $(OBJS) -Iminilibx minilibx/libmlx.a -Iheaders 			\
-	-Wall -framework Foundation -isysroot `xcrun --show-sdk-path` 	\
+$(NAME):	$(OBJS) 
+	cc $(CFLAGS) $(OBJS) minilibx/libmlx.a \
+	-Wall -framework Foundation -isysroot `xcrun --show-sdk-path` \
 	-framework Cocoa -framework OpenGL -o $(NAME)
-m:	$(NAME)
-	./fract-ol m
-j:	$(NAME)
-	./fract-ol j
 clean:
-	make clean -C minilibx
+	make -C minilibx $@
 	rm -rf $(OBJS)
 fclean:	clean
 	rm -rf $(NAME)

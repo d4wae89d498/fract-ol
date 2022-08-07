@@ -6,7 +6,7 @@
 /*   By: mafaussu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 10:30:40 by mafaussu          #+#    #+#             */
-/*   Updated: 2022/07/30 10:36:53 by mafaussu         ###   ########lyon.fr   */
+/*   Updated: 2022/08/07 18:51:34 by mafaussu         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 typedef struct s_complex
 {
-	long double	r;
-	long double	i;
+	ftype	r;
+	ftype	i;
 }	t_complex;
 # else
 #  error "NOP"
@@ -28,10 +28,10 @@ typedef struct s_complex
  */
 # endif
 
-long double	sqr(long double k);
-long double	re(t_complex c);
-long double	im(t_complex c);
-t_complex	ft_complex(long double r, long double i);
+ftype	sqr(ftype k);
+ftype	re(t_complex c);
+ftype	im(t_complex c);
+t_complex	ft_complex(ftype r, ftype i);
 t_complex	ft_complex_sqr(t_complex z);
 t_complex	ft_complex_add(t_complex a, t_complex b);
 t_complex	ft_complex_mul(t_complex a, t_complex b);

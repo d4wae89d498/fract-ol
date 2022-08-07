@@ -6,13 +6,13 @@
 /*   By: mafaussu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 10:27:51 by mafaussu          #+#    #+#             */
-/*   Updated: 2022/07/30 10:39:45 by mafaussu         ###   ########lyon.fr   */
+/*   Updated: 2022/08/07 18:53:05 by mafaussu         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mymath.h"
 
-long double	sqr(long double k)
+ftype	sqr(ftype k)
 {
 	return (k * k);
 }

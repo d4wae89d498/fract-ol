@@ -6,29 +6,32 @@
 /*   By: mafaussu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 11:06:00 by mafaussu          #+#    #+#             */
-/*   Updated: 2022/07/31 18:01:29 by mafaussu         ###   ########lyon.fr   */
+/*   Updated: 2022/08/07 19:16:04 by mafaussu         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTALS_H
 # define FRACTALS_H
 # include "window.h"
+# include "mymath.h"
+# include "pthread.h"
+# define OPT2 4
+# define ITER 64
+# define THREADS 64
+# if THREADS > 1
 
-# define OPT2 2
-# define OPT 8
-# define ITER 66
-# define THREADS 42
+typedef struct s_thd
+{
+	int			n;
+	t_mlx_win	*win;
+}	t_thd;
+# endif
 
-int draw_fractal(t_mlx_win *win);
-
-unsigned int charbon_draw_pixel(t_mlx_win *w, int x, int y);
-
-int mandlebrot(t_mlx_win *win);
-int julia(t_mlx_win *win);
-int mandleia(t_mlx_win *win);
-int julebrot(t_mlx_win *win);
-int draw_fractal(t_mlx_win *win);
-
-extern unsigned int(*const g_fractals[255])(t_mlx_win *, int, int);
-extern int	g_current;
+void	parse_im_re(t_mlx_win *win, int ac, char **av);
+typedef unsigned int(*t_fractal_function)(t_mlx_win *, int, int);
+t_fractal_function	get_fractal(int i);
+int					draw_fractal(t_mlx_win *win);
+unsigned int		charbon(t_mlx_win *w, int x, int y);
+unsigned int		mandlebrot(t_mlx_win *, int x, int y);
+unsigned int		julia(t_mlx_win *, int x, int y);
 #endif
