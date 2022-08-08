@@ -15,7 +15,7 @@ $(NAME): draw_fractals.c $(OBJS) draw_fractals.o
 	cc $(CFLAGS) $(OBJS) draw_fractals.o minilibx/libmlx.a \
 	-Wall -framework Foundation -isysroot `xcrun --show-sdk-path` \
 	-framework Cocoa -framework OpenGL -o $(NAME)
-bonus:  draw_fractals_bonus.c mymath.h window.h Makefile minilibx/libmlx.a $(OBJS) draw_fractals_bonus.o
+bonus:  draw_fractals_bonus.c $(OBJS) draw_fractals_bonus.o
 	cc $(CFLAGS) $(OBJS) draw_fractals_bonus.o minilibx/libmlx.a \
 	-Wall -framework Foundation -isysroot `xcrun --show-sdk-path` \
 	-framework Cocoa -framework OpenGL -o $(NAME)
