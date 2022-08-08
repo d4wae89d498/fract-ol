@@ -88,7 +88,7 @@ int	main(int ac, char **av)
 
 	if (parse_args(ac, av, &fractal))
 		return (1);
-	win = ft_mlx_win("fract-ol", (int)(1024), (int)(720));
+	win = ft_mlx_win("fract-ol", (int)WIDTH, (int)HEIGHT);
 	win.data = &fractal;
 	if (win.error)
 	{

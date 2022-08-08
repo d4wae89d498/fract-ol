@@ -24,3 +24,10 @@ t_fractal_function	get_fractal(int i)
 	return (g_fractals[i]);
 }
 
+t_complex	get_position_complex(t_mlx_win *win, int x, int y)
+{
+	return (complex(RATIO_WIDTH * 3 * ((((long double) x
+						- win->xpos) / WIDTH * win->zoom) - 1.3),
+			RATIO_HEIGHT * 3 * ((((long double) y
+						- win->ypos) / HEIGHT * win->zoom) - 1.3)));
+}

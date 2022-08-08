@@ -18,10 +18,7 @@ unsigned int	charbon2(t_mlx_win *w, int x, int y)
 	t_complex	c;
 	t_complex	z;
 
-	c = complex(1.6 * 3 * ((((long double) x
-						- w->xpos) / w->width * w->zoom) - 1.3),
-			0.9 * 3 * ((((long double) y
-						- w->ypos) / w->height * w->zoom) - 1.3));
+	c =	get_position_complex(w, x, y);
 	z = ((t_fractal*)w->data)->c;
 	i = 0;
 	while (i < ITER && sqr(re(z)) + sqr(im(z)) < OPT2)

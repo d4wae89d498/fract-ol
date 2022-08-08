@@ -18,10 +18,7 @@ unsigned int	julia(t_mlx_win *win, int x, int y)
 	t_complex	c;
 	t_complex	z;
 
-	z = complex(1.6 * 3 * ((((long double) x
-						- win->xpos) / win->width * win->zoom) - 1.3),
-			0.9 * 3 * ((((long double) y
-						- win->ypos) / win->height * win->zoom) - 1.3));
+	z =	get_position_complex(win, x, y);
 	c = ((t_fractal*)win->data)->c;
 	i = 0;
 	while (i < ITER && sqr(re(z)) + sqr(im(z)) < OPT2)

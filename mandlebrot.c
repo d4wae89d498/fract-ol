@@ -18,10 +18,7 @@ unsigned int	mandlebrot(t_mlx_win *win, int x, int y)
 	t_complex	c;
 	t_complex	z;
 
-	c = complex(1.6 * 3 * ((((long double) x
-						- win->xpos) / win->width * win->zoom) - 1.3),
-			0.9 * 3 * ((((long double) y
-						- win->ypos) / win->height * win->zoom) - 1.3));
+	c =	get_position_complex(win, x, y);
 	z = ((t_fractal*)win->data)->c;
 	i = 0;
 	while (i < ITER && sqr(re(z)) + sqr(im(z)) < OPT2)
