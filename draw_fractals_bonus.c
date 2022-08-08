@@ -16,27 +16,6 @@
 #include "unistd.h"
 #include "pthread.h"
 
-t_complex	get_fractal_default_c(char c)
-{
-	if (c == 'j')
-		return (ft_complex(.285, .013));
-	if (c == 'c')
-		return (ft_complex(.42, .42));
-	return (ft_complex(0, 0));
-}
-
-t_fractal_function	get_fractal(int i)
-{
-	static unsigned int	(*g_fractals [255])(t_mlx_win *, int, int);
-
-	if (!g_fractals['c'])
-	{
-		g_fractals['c'] = charbon;
-		g_fractals['m'] = mandlebrot;
-		g_fractals['j'] = julia;
-	}
-	return (g_fractals[i]);
-}
 #if COLOR_SHIFT == 1
 
 void	*draw_fractal_th(void *data)
@@ -55,7 +34,7 @@ void	*draw_fractal_th(void *data)
 		x = 0;
 		while (x < win->width)
 		{
-			i = get_fractal(win->fractal)(win, x, y);
+			i = ((t_fractal*) win->data)->function(win, x, y);
 			ft_mlx_pixel(win, x, y, *(unsigned int *)(unsigned char [4]){
 				i * 2 / win->zoom, i * 1.1 / win->zoom, i * 4 / win->zoom, 0
 			});
@@ -83,7 +62,7 @@ void	*draw_fractal_th(void *data)
 		x = 0;
 		while (x < win->width)
 		{
-			i = get_fractal(win->fractal)(win, x, y);
+			i = ((t_fractal*) win->data)->function(win, x, y);
 			ft_mlx_pixel(win, x, y, *(unsigned int *)(unsigned char [4]){
 				i * 2, i * 1.1, i * 4, 0
 			});

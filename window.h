@@ -39,13 +39,12 @@ typedef struct s_mlx_win {
 	t_mlx_img	img;
 	int			width;
 	int			height;
-	ftype		xpos;
-	ftype		ypos;
-	ftype		zoom;
+	t_float		xpos;
+	t_float		ypos;
+	t_float		zoom;
 	int			error;
 	int			thread;
-	int			fractal;
-	t_complex	c;
+	void 		*data;
 }	t_mlx_win;
 typedef struct s_color
 {
@@ -69,9 +68,12 @@ void		ft_mlx_hook_mousedown(t_mlx_win *win,
 				int (*f)(int button, int x, int y, t_mlx_win *data));
 void		ft_mlx_hook_keydown(t_mlx_win *win, int (*f)(int, t_mlx_win *));
 void		ft_mlx_hook_mouseup(t_mlx_win *win, int (*f)(int, t_mlx_win *));
+void		ft_mlx_hook_destroy(t_mlx_win *win, int (*f)(t_mlx_win *));
+/*
 void		ft_mlx_hook_keyup(t_mlx_win *win, int (*f)(int, t_mlx_win *));
 void		ft_mlx_hook_mousemove(t_mlx_win *win,
 				int (*f)(int, int, t_mlx_win *));
-void		ft_mlx_hook_destroy(t_mlx_win *win, int (*f)(t_mlx_win *));
 void		ft_mlx_hook_expose(t_mlx_win *win, int (*f)(t_mlx_win *));
+*/
+
 #endif

@@ -18,8 +18,8 @@
 
 typedef struct s_complex
 {
-	ftype	r;
-	ftype	i;
+	t_float	r;
+	t_float	i;
 }	t_complex;
 # else
 #  error "NOP"
@@ -28,13 +28,12 @@ typedef struct s_complex
  */
 # endif
 
-ftype				sqr(ftype k);
-ftype				re(t_complex c);
-ftype				im(t_complex c);
-t_complex			ft_complex(ftype r, ftype i);
-t_complex			ft_complex_sqr(t_complex z);
-t_complex			ft_complex_add(t_complex a, t_complex b);
-t_complex			ft_complex_mul(t_complex a, t_complex b);
-t_complex			ft_parse_complex(char *re, char *im);
-ftype				fparse(char *str);
+t_float				sqr(t_float k);
+t_float				re(t_complex c);
+t_float				im(t_complex c);
+t_complex			complex(t_float r, t_float i);
+t_complex			complex_sqr(t_complex z);
+t_complex			complex_add(t_complex a, t_complex b);
+t_complex			complex_mul(t_complex a, t_complex b);
+t_float				parse_float(char *str);
 #endif

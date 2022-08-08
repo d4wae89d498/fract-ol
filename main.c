@@ -61,29 +61,35 @@ static int	destroy(t_mlx_win *data)
 	exit (0);
 }
 
-static int	usage(void)
+static int	parse_args(int ac, char **av, t_fractal *fractal)
 {
-	write(1, "usage: fract-ol <char> <Re> <Im>\n", 33);
-	write(1, "\t- m mandlebrot\n", 16);
-	write(1, "\t- j julia\n", 11);
-	write(1, "\t- c charbon\n", 13);
-	return (1);
+	if ((ac != 2 && ac != 4) || !get_fractal((int)av[1][0]) || av[1][1])
+	{
+		write(1, "usage: fract-ol <char> <Re> <Im>\n", 33);
+		write(1, "\t- m mandlebrot\n", 16);
+		write(1, "\t- j julia\n", 11);
+		write(1, "\t- c charbon\n", 13);
+		return (1);
+	}
+	fractal->function = get_fractal(av[1][0]);
+	if (ac == 4)
+		fractal->c = complex(parse_float(av[2]), parse_float(av[3]));
+	else
+		fractal->c = get_fractal_default_c(av[1][0]);
+	return (0);
+
+
 }
 
 int	main(int ac, char **av)
 {
 	t_mlx_win	win;
-	t_complex	c;
+	t_fractal	fractal;
 
-	if ((ac != 2 && ac != 4) || !get_fractal((int)av[1][0]) || av[1][1])
-		return (usage());
-	if (ac == 4)
-		c = ft_parse_complex(av[2], av[3]);
-	else
-		c = get_fractal_default_c(av[1][0]);
+	if (parse_args(ac, av, &fractal))
+		return (1);
 	win = ft_mlx_win("fract-ol", (int)(1024), (int)(720));
-	win.fractal = av[1][0];
-	win.c = c;
+	win.data = &fractal;
 	if (win.error)
 	{
 		write(1, "MLX initialisation error\n", 25);

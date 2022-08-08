@@ -18,15 +18,15 @@ unsigned int	mandlebrot(t_mlx_win *win, int x, int y)
 	t_complex	c;
 	t_complex	z;
 
-	c = ft_complex(1.6 * 3 * ((((long double) x
+	c = complex(1.6 * 3 * ((((long double) x
 						- win->xpos) / win->width * win->zoom) - 1.3),
 			0.9 * 3 * ((((long double) y
 						- win->ypos) / win->height * win->zoom) - 1.3));
-	z = win->c;
+	z = ((t_fractal*)win->data)->c;
 	i = 0;
 	while (i < ITER && sqr(re(z)) + sqr(im(z)) < OPT2)
 	{
-		z = ft_complex_add(ft_complex_sqr(z), c);
+		z = complex_add(complex_sqr(z), c);
 		i += 1;
 	}
 	return (i);

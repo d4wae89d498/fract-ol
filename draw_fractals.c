@@ -1,33 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   julia.c                                            :+:      :+:    :+:   */
+/*   fractals.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mafaussu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/07 18:20:12 by mafaussu          #+#    #+#             */
-/*   Updated: 2022/08/07 23:39:15 by mafaussu         ###   ########lyon.fr   */
+/*   Created: 2022/07/30 10:42:12 by mafaussu          #+#    #+#             */
+/*   Updated: 2022/08/07 22:53:42 by mafaussu         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractals.h"
+#include "window.h"
+#include "mymath.h"
+#include "unistd.h"
 
-unsigned int	julia(t_mlx_win *win, int x, int y)
+int	draw_fractal(t_mlx_win *win)
 {
+	int			x;
+	int			y;
 	int			i;
-	t_complex	c;
-	t_complex	z;
 
-	z = complex(1.6 * 3 * ((((long double) x
-						- win->xpos) / win->width * win->zoom) - 1.3),
-			0.9 * 3 * ((((long double) y
-						- win->ypos) / win->height * win->zoom) - 1.3));
-	c = ((t_fractal*)win->data)->c;
-	i = 0;
-	while (i < ITER && sqr(re(z)) + sqr(im(z)) < OPT2)
+	y = 0;
+	while (y < win->height)
 	{
-		z = complex_add(complex_sqr(z), c);
-		i += 1;
+		x = 0;
+		while (x < win->width)
+		{
+			i = ((t_fractal*) win->data)->function(win, x, y);
+			ft_mlx_pixel(win, x, y, *(unsigned int *)(unsigned char [4]){
+				i * 2, i * 1.1, i * 4, 0
+			});
+			x += 1;
+		}
+		y += 1;
 	}
-	return (i);
+	return (!ft_mlx_draw(win));
 }

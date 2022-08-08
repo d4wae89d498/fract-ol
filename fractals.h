@@ -23,18 +23,27 @@
 #  define COLOR_SHIFT 0
 # endif
 
+typedef unsigned int	(*t_fractal_function)(t_mlx_win *, int, int);
+typedef struct s_fractal
+{
+	t_fractal_function
+				function;
+	t_complex	c;
+}	t_fractal;
+
 typedef struct s_thd
 {
 	int					n;
 	t_mlx_win			*win;
 }	t_thd;
 void					parse_im_re(t_mlx_win *win, int ac, char **av);
-typedef unsigned int	(*t_fractal_function)(t_mlx_win *, int, int);
 t_fractal_function		get_fractal(int i);
 int						draw_fractal(t_mlx_win *win);
 unsigned int			charbon(t_mlx_win *w, int x, int y);
+unsigned int			charbon2(t_mlx_win *w, int x, int y);
 unsigned int			mandlebrot(t_mlx_win *w, int x, int y);
 unsigned int			julia(t_mlx_win *w, int x, int y);
 t_complex				get_fractal_default_c(char c);
 t_fractal_function		get_fractal(int i);
+int						draw_fractal(t_mlx_win *win);
 #endif

@@ -71,6 +71,8 @@ void	ft_mlx_pixel(t_mlx_win *win, int x, int y, unsigned int color)
 }
 
 /*
+ *	Bellow hooks may be usefull, but it not used currently. 
+ *
    void   ft_mlx_hook_keyup(t_mlx_win *win, int (*f)(int, t_mlx_win *))
    {
    mlx_hook(win->win, ON_KEYUP, 0, f, win);

@@ -12,14 +12,14 @@
 
 #include "mymath.h"
 
-ftype	sqr(ftype k)
+t_float	sqr(t_float k)
 {
 	return (k * k);
 }
 
-t_complex	ft_complex_add(t_complex a, t_complex b)
+t_complex	complex_add(t_complex a, t_complex b)
 {
-	return (ft_complex(re(a) + re(b), im(a) + im(b)));
+	return (complex(re(a) + re(b), im(a) + im(b)));
 }
 
 /*
@@ -29,9 +29,9 @@ t_complex	ft_complex_add(t_complex a, t_complex b)
  * (a+bi)(x+yi) = ax - by + 2abi
  *
  */
-t_complex	ft_complex_mul(t_complex a, t_complex b)
+t_complex	complex_mul(t_complex a, t_complex b)
 {
-	return (ft_complex(re(a) * re(b) - im(a) * im(b), 2 * re(a) * im(b)));
+	return (complex(re(a) * re(b) - im(a) * im(b), 2 * re(a) * im(b)));
 }
 
 /*
@@ -40,7 +40,7 @@ t_complex	ft_complex_mul(t_complex a, t_complex b)
  * (a+bi)² = a² + 2abi - b²
  * (a+bi)² = a² - b² + 2abi
  */
-t_complex	ft_complex_sqr(t_complex z)
+t_complex	complex_sqr(t_complex z)
 {
-	return (ft_complex(sqr(re(z)) - sqr(im(z)), 2 * re(z) * im(z)));
+	return (complex(sqr(re(z)) - sqr(im(z)), 2 * re(z) * im(z)));
 }
