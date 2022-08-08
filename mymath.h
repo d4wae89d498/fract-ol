@@ -13,7 +13,6 @@
 #ifndef MYMATH_H
 # define MYMATH_H
 # include "math.h"
-# define COMPLEX_WITH_GCC 0
 # ifndef t_float
 
 typedef float t_float;
