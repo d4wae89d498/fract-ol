@@ -5,7 +5,7 @@ SRCS=main.c math1.c math2.c window1.c window2.c fractals.c\
 	mandlebrot.c\
 	julia.c
 OBJS=$(SRCS:.c=.o)
-CFLAGS=-Wall -Wextra -Werror -Iminilibx  -Dt_float="float" -DTHREADS=40 -DCOLOR_SHIFT=1 -DWIDTH=1920 -DHEIGHT=1080 -O3 -g
+CFLAGS=-Wall -Wextra -Werror -Iminilibx # -O3 -g
 all: $(NAME)
 %.o: %.c  fractals.h mymath.h window.h Makefile minilibx/libmlx.a 
 	$(CC) $(CFLAGS) -c $< -o $@

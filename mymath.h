@@ -6,18 +6,15 @@
 /*   By: mafaussu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 10:30:40 by mafaussu          #+#    #+#             */
-/*   Updated: 2022/08/07 20:15:37 by mafaussu         ###   ########lyon.fr   */
+/*   Updated: 2022/08/08 17:48:21 by mafaussu         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MYMATH_H
 # define MYMATH_H
 # include "math.h"
-# ifndef t_float
 
-typedef float t_float;
-# endif
-
+typedef float		t_float;
 typedef struct s_complex
 {
 	t_float	r;

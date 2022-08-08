@@ -6,7 +6,7 @@
 /*   By: mafaussu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 11:06:00 by mafaussu          #+#    #+#             */
-/*   Updated: 2022/08/07 23:15:04 by mafaussu         ###   ########lyon.fr   */
+/*   Updated: 2022/08/08 17:48:19 by mafaussu         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,20 @@
 # define FRACTALS_H
 # include "window.h"
 # include "mymath.h"
-# ifndef OPT2
-# 	define OPT2 4
-# endif
-# ifndef ITER
-#  define ITER 64
-# endif
-# ifndef THREADS
-#  define THREADS 1
-# endif
-# ifndef COLOR_SHIFT
-#  define COLOR_SHIFT 0
-# endif
-# ifndef WIDTH
-#  define WIDTH 1024
-# endif
-# ifndef HEIGHT
-#  define HEIGHT 720
-# endif
-# ifndef RATIO_WIDTH
-#  define RATIO_WIDTH 1.6
-# endif
-# ifndef RATIO_HEIGHT 
-#  define RATIO_HEIGHT 0.9
-# endif
-# ifndef t_float
-
-typedef float t_float;
-# endif
+# define OPT2 4
+# define ITER 64
+# define WIDTH 1024
+# define HEIGHT 720
+# define RATIO_WIDTH 1.6
+# define RATIO_HEIGHT 0.9
+# define THREADS 1
+# define COLOR_SHIFT 1
 
 typedef unsigned int	(*t_fractal_function)(t_mlx_win *, int, int);
 typedef struct s_fractal
 {
-	t_fractal_function
-				function;
-	t_complex	c;
+	t_fractal_function	function;
+	t_complex			c;
 }	t_fractal;
 
 typedef struct s_thd

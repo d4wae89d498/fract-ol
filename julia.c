@@ -6,7 +6,7 @@
 /*   By: mafaussu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 18:20:12 by mafaussu          #+#    #+#             */
-/*   Updated: 2022/08/07 23:39:15 by mafaussu         ###   ########lyon.fr   */
+/*   Updated: 2022/08/08 17:31:34 by mafaussu         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ unsigned int	julia(t_mlx_win *win, int x, int y)
 	t_complex	c;
 	t_complex	z;
 
-	z =	get_position_complex(win, x, y);
-	c = ((t_fractal*)win->data)->c;
+	z = get_position_complex(win, x, y);
+	c = ((t_fractal *)win->data)->c;
 	i = 0;
 	while (i < ITER && sqr(re(z)) + sqr(im(z)) < OPT2)
 	{

@@ -6,7 +6,7 @@
 /*   By: mafaussu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 10:42:55 by mafaussu          #+#    #+#             */
-/*   Updated: 2022/08/07 23:30:01 by mafaussu         ###   ########lyon.fr   */
+/*   Updated: 2022/08/08 17:31:16 by mafaussu         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ static int	parse_args(int ac, char **av, t_fractal *fractal)
 	else
 		fractal->c = get_fractal_default_c(av[1][0]);
 	return (0);
-
-
 }
 
 int	main(int ac, char **av)

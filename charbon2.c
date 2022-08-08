@@ -6,7 +6,7 @@
 /*   By: mafaussu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:05:48 by mafaussu          #+#    #+#             */
-/*   Updated: 2022/08/07 23:38:40 by mafaussu         ###   ########lyon.fr   */
+/*   Updated: 2022/08/08 17:32:29 by mafaussu         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ unsigned int	charbon2(t_mlx_win *w, int x, int y)
 	t_complex	c;
 	t_complex	z;
 
-	c =	get_position_complex(w, x, y);
-	z = ((t_fractal*)w->data)->c;
+	c = get_position_complex(w, x, y);
+	z = ((t_fractal *)w->data)->c;
 	i = 0;
 	while (i < ITER && sqr(re(z)) + sqr(im(z)) < OPT2)
 	{

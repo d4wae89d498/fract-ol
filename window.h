@@ -6,7 +6,7 @@
 /*   By: mafaussu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:20:34 by mafaussu          #+#    #+#             */
-/*   Updated: 2022/08/07 23:16:02 by mafaussu         ###   ########lyon.fr   */
+/*   Updated: 2022/08/08 17:33:00 by mafaussu         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_mlx_win {
 	t_float		zoom;
 	int			error;
 	int			thread;
-	void 		*data;
+	void		*data;
 }	t_mlx_win;
 typedef struct s_color
 {

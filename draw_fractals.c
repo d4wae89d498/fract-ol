@@ -6,7 +6,7 @@
 /*   By: mafaussu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 10:42:12 by mafaussu          #+#    #+#             */
-/*   Updated: 2022/08/07 22:53:42 by mafaussu         ###   ########lyon.fr   */
+/*   Updated: 2022/08/08 17:32:17 by mafaussu         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	draw_fractal(t_mlx_win *win)
 		x = 0;
 		while (x < win->width)
 		{
-			i = ((t_fractal*) win->data)->function(win, x, y);
+			i = ((t_fractal *) win->data)->function(win, x, y);
 			ft_mlx_pixel(win, x, y, *(unsigned int *)(unsigned char [4]){
 				i * 2, i * 1.1, i * 4, 0
 			});
