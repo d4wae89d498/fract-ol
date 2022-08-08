@@ -14,20 +14,16 @@
 # define MYMATH_H
 # include "math.h"
 # define COMPLEX_WITH_GCC 0
-# if COMPLEX_WITH_GCC == 0
+# ifndef t_float
+
+typedef float t_float;
+# endif
 
 typedef struct s_complex
 {
 	t_float	r;
 	t_float	i;
 }	t_complex;
-# else
-#  error "NOP"
-/*
- *typedef _Complex long double	t_complex;
- */
-# endif
-
 t_float				sqr(t_float k);
 t_float				re(t_complex c);
 t_float				im(t_complex c);

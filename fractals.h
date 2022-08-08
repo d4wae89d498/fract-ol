@@ -38,6 +38,10 @@
 # ifndef RATIO_HEIGHT 
 #  define RATIO_HEIGHT 0.9
 # endif
+# ifndef t_float
+
+typedef float t_float;
+# endif
 
 typedef unsigned int	(*t_fractal_function)(t_mlx_win *, int, int);
 typedef struct s_fractal
